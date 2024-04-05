@@ -1,0 +1,63 @@
+import 'package:flutter/material.dart';
+import 'package:transition_location_ui/widget/locations_widget.dart';
+
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  @override
+  Widget build(BuildContext context) => Scaffold(
+        backgroundColor: Colors.blueGrey,
+        appBar: buildAppBar(),
+        body: const LocationsWidget(),
+        bottomNavigationBar: buildBottomNavigation(),
+      );
+
+  PreferredSizeWidget buildAppBar() => AppBar(
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        title: const Text('INTERESTS'),
+        centerTitle: true,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.notifications),
+            onPressed: () {
+              // Implement notification action
+            },
+          ),
+        ],
+        leading: IconButton(
+          icon: const Icon(Icons.search),
+          onPressed: () {
+            // Implement search action
+          },
+        ),
+      );
+
+  Widget buildBottomNavigation() => BottomNavigationBar(
+        elevation: 0,
+        unselectedItemColor: Colors.white54,
+        selectedItemColor: Colors.white,
+        backgroundColor: Colors.transparent,
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.map_outlined),
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.location_on_outlined),
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person_outline),
+            label: '',
+          ),
+        ],
+      );
+}

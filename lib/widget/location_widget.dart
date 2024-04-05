@@ -1,7 +1,9 @@
 // ignore_for_file: library_private_types_in_public_api
 
 import 'package:flutter/material.dart';
+
 import 'package:transition_location_ui/model/location.dart';
+import 'package:transition_location_ui/page/detail_page.dart';
 import 'package:transition_location_ui/widget/expanded_content_widget.dart';
 import 'package:transition_location_ui/widget/image_widget.dart';
 
@@ -41,11 +43,37 @@ class _LocationWidgetState extends State<LocationWidget> {
             bottom: isExpanded ? 150 : 100,
             child: GestureDetector(
               onPanUpdate: onPanUpdate,
-              onTap: () {},
+              onTap: openDetailPage,
               child: ImageWidget(location: widget.location),
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  void openDetailPage() {
+    if (!isExpanded) {
+      /// Tap to expand card
+      setState(() => isExpanded = true);
+      return;
+    }
+
+    Navigator.of(context).push(
+      PageRouteBuilder(
+        transitionDuration: const Duration(seconds: 1),
+        reverseTransitionDuration: const Duration(seconds: 1),
+        pageBuilder: (context, animation, secondaryAnimation) {
+          final curvedAnimation = CurvedAnimation(
+            parent: animation,
+            curve: const Interval(0, 0.5),
+          );
+
+          return FadeTransition(
+            opacity: curvedAnimation,
+            child: DetailPage(location: widget.location, animation: animation),
+          );
+        },
       ),
     );
   }

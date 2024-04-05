@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:transition_location_ui/data/hero_tag.dart';
+import 'package:transition_location_ui/data/locations.dart';
 import 'package:transition_location_ui/model/location.dart';
+import 'package:transition_location_ui/widget/hero_widget.dart';
 import 'package:transition_location_ui/widget/stars_widget.dart';
 
 class ExpandedContentWidget extends StatelessWidget {
@@ -21,7 +24,10 @@ class ExpandedContentWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            Text(location.addressLine1),
+            HeroWidget(
+              tag: HeroTag.addressLine1(location),
+              child: Text(location.addressLine1),
+            ),
             const SizedBox(height: 8),
             buildAddressRating(location: location),
             const SizedBox(height: 12),
@@ -36,11 +42,17 @@ class ExpandedContentWidget extends StatelessWidget {
       Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(
-            location.addressLine2,
-            style: const TextStyle(color: Colors.black45),
+          HeroWidget(
+            tag: HeroTag.addressLine2(location),
+            child: Text(
+              location.addressLine2,
+              style: const TextStyle(color: Colors.black45),
+            ),
           ),
-          StarsWidget(stars: location.starRating),
+          HeroWidget(
+            tag: HeroTag.stars(location),
+            child: StarsWidget(stars: location.starRating),
+          ),
         ],
       );
 
@@ -48,17 +60,20 @@ class ExpandedContentWidget extends StatelessWidget {
     required Location location,
   }) =>
       Row(
-        children: location.reviews
-            .map(
-              (review) => Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 4),
-                child: CircleAvatar(
-                  radius: 16,
-                  backgroundColor: Colors.black12,
-                  backgroundImage: AssetImage(review.urlImage),
-                ),
+        children: location.reviews.map((review) {
+          final pageIndex = locations.indexOf(location);
+
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 4),
+            child: HeroWidget(
+              tag: HeroTag.avatar(review, pageIndex),
+              child: CircleAvatar(
+                radius: 16,
+                backgroundColor: Colors.black12,
+                backgroundImage: AssetImage(review.urlImage),
               ),
-            )
-            .toList(),
+            ),
+          );
+        }).toList(),
       );
 }

@@ -24,17 +24,13 @@ class _HomePageState extends State<HomePage> {
         centerTitle: true,
         actions: [
           IconButton(
-            icon: const Icon(Icons.notifications),
-            onPressed: () {
-              // Implement notification action
-            },
+            icon: const Icon(Icons.location_pin),
+            onPressed: () {},
           ),
         ],
         leading: IconButton(
-          icon: const Icon(Icons.search),
-          onPressed: () {
-            // Implement search action
-          },
+          icon: const Icon(Icons.search_outlined),
+          onPressed: () {},
         ),
       );
 
@@ -47,11 +43,11 @@ class _HomePageState extends State<HomePage> {
         showUnselectedLabels: false,
         items: const [
           BottomNavigationBarItem(
-            icon: Icon(Icons.map_outlined),
+            icon: Icon(Icons.pin_drop_outlined),
             label: '',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.location_on_outlined),
+            icon: Icon(Icons.add_location),
             label: '',
           ),
           BottomNavigationBarItem(
